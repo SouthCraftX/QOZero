@@ -24,7 +24,7 @@ int main()
 }
 ```
 
-#Applying Git Subtree
+## Applying Git Subtree
 QuickOK series of libraries use QOZero via git subtree. To use QOZero in this way:
 First time adding:
 ```bash
