@@ -15,5 +15,5 @@
 #include "limit.h"
 
 #if QO_PLATFORM(WINDOWS)
-#include "base/win32_common.h"
+// #include "base/win32_common.h"
 #endif // QO_PLATFORM(WINDOWS)

@@ -15,7 +15,7 @@ struct _QOClassBase
     qo_flag32_t trait;
 };
 
-typedef _QOClassBase QOClassBase;
+typedef struct _QOClassBase QOClassBase;
 typedef QOClassBase QOClass;
 
 QO_FORCE_INLINE

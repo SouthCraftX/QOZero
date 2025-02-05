@@ -28,7 +28,7 @@
 #   define QO_USED          __attribute__((used))
 #   define QO_ABORT()       __builtin_trap()
 #   define QO_STACK_ALLOC(n) __builtin_alloca(n)
-#   define QO_ERRPRINTF(f,...) __buildin_printf(__VA_ARGS__)
+#   define QO_ERRPRINTF __builtin_printf
 #elif defined(_MSC_VER)
 #   info "Warning:Missing feature for QO_LIKELY and QOEAB_UNLIKELY"
 #   define QO_DEPRICATED    __declspec(deprecated)
@@ -80,6 +80,8 @@
 #   define QO_ABORT() abort()
 #endif
 
+#define QO_GLOBAL_UNIQUE inline
+
 #if defined(QO_WANT_STATIC_LIBRARY)
 #   define QO_API
 #else
@@ -102,4 +104,16 @@
 #endif 
 
 #define QO_GLOBAL_LOCAL static
+
+#define __QO_ABORT_MSG(m) \
+    do { \
+        QO_ERRPRINTF("File %s, line %d, func %s: %s\n", \
+        __FILE__, __LINE__, __func__, m); QO_ABORT(); \
+    } while(0)
+
+#define __QO_BUG(m) \
+    do { \
+        QO_ERRPRINTF("Report bug in file %s, line %d, func %s: %s\n", \
+        __FILE__, __LINE__, __func__, m); QO_ABORT(); \
+    } while(0);
 

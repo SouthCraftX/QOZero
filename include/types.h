@@ -1,6 +1,8 @@
 #pragma once
 
 #include <assert.h>
+#include "attribute.h"
+#include "debug.h"
 #include "platform.h"
 
 #if defined(__GNUC__)
@@ -48,3 +50,32 @@ typedef     char*               qo_cstring_t;
 typedef     char const  *       qo_ccstring_t;
 
 #define QO_INVALID_ADDRESS ((qo_pointer_t)(-1))
+
+#include "int128.h"
+
+// --------- VLA --------
+struct _QO_VLA
+{
+    qo_size_t  size;
+    qo_byte_t  data[];
+};
+typedef struct _QO_VLA QO_VLA;
+
+QO_GLOBAL_UNIQUE QO_FORCE_INLINE QO_NO_SIDE_EFFECTS
+qo_pointer_t
+qo_vla_at(
+    QO_VLA *    vla ,
+    qo_size_t   element_size ,
+    qo_size_t   index
+) {
+    QO_ASSERT(index * element_size < vla->size);
+    return (qo_pointer_t)(vla->data + index * element_size);
+}
+
+QO_GLOBAL_UNIQUE QO_FORCE_INLINE QO_NO_SIDE_EFFECTS
+qo_pointer_t
+qo_vla_get_data(
+    QO_VLA *    vla
+) {
+    return (qo_pointer_t)(vla->data);
+}

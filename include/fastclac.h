@@ -1,33 +1,33 @@
 #pragma once
 #include "types.h"
 
-struct _QODivisionInt64
+struct _QO_DivisionInt64
 {
     qo_int64_t  remainder;
     qo_int64_t  quotient;
 };
-typedef struct _QODivisionInt64 QODivisionInt64;
+typedef struct _QO_DivisionInt64 QO_DivisionInt64;
 
-struct _QODivisionInt32
+struct _QO_DivisionInt32
 {
     qo_int32_t  remainder;
     qo_int32_t  quotient;
 };
-typedef struct _QODivisionInt32 QODivisionInt32;
+typedef struct _QO_DivisionInt32 QO_DivisionInt32;
 
 #define QO_DIVISION_I64(r , q) \
-        ((QODivisionInt64){ .quotient = (q) , .remainder = (r) })
+        ((QO_DivisionInt64){ .quotient = (q) , .remainder = (r) })
 #define QO_DIVISION_I32(r , q) \
-        ((QODivisionInt32){ .quotient = (q) , .remainder = (r) })
+        ((QO_DivisionInt32){ .quotient = (q) , .remainder = (r) })
 #define QO_DIV_I64(x , y) QO_DIVISION_I64((x) % (y) , (x) / (y))
 #define QO_DIV_I32(x , y) QO_DIVISION_I32((x) % (y) , (x) / (y))
 
 #if QO_SYSTEM_BIT(64)
-typedef QODivisionInt64 QODivision;
+typedef QO_DivisionInt64 QO_Division;
 #   define QO_DIVISION  QO_DIVISION_I64
 #   define QO_DIV       QO_DIV_I64
 #else
-typedef QODivisionInt32 QODivision;
+typedef QO_DivisionInt32 QO_Division;
 #   define QO_DIVISION  QO_DIVISION_I32
 #   define QO_DIV       QO_DIV_I32
 #endif
@@ -46,6 +46,7 @@ typedef QODivisionInt32 QODivision;
 #define QO_HAS_FLAG(x,f) (x & f)
 
 #define QO_SWAP(x,y) do { typeof(x) tmp = x; x = y; y = tmp; } while (qo_false)
+#define QO_IS_POW2(x) ((x) && !((x) & ((x) - 1)))
 
 #define QO_SNULL(x,t) ((x) ? (x->t) : NULL)
 
