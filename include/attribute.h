@@ -117,3 +117,21 @@
         __FILE__, __LINE__, __func__, m); QO_ABORT(); \
     } while(0);
 
+// Is __VA_OPT__ supported?
+#if (__STDC_VERSION__ >= 2023100L) || (__cplusplus >= 202000L)
+#   define QO_VA_OPT_SUPPORTED 1
+#elif defined(__clang__) && (__clang_major__ >= 9)
+#   define QO_VA_OPT_SUPPORTED 1
+#elif defined(__GNUC__) && (__GNUC__ >= 8)
+#   define QO_VA_OPT_SUPPORTED 1
+#else
+#   define QO_VA_OPT_SUPPORTED 0
+#endif
+
+#define QO_EXPAND(...) __VA_ARGS__
+
+#define __QO_CHECK(x , y , ...) y
+#define __QO_EXPAND1(...)
+#define __QO_EXPAND2(...) __VA_ARGS__
+#define QO_IF_VA_ARGS_NOT_EMPTY(...) \
+        __QO_CHECK(__VA_ARGS__ , __QO_EXPAND2 , __QO_EXPAND1)
