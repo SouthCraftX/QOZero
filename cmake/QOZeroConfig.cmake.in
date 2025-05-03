@@ -1,0 +1,26 @@
+@PACKAGE_INIT@
+
+# --- Find Dependencies (if not bundled) ---
+if(NOT @QOZ_BUNDLE_DEPS_CONFIG@)
+    message(STATUS "QOZero (unbundled) requires stringzilla and mimalloc. Searching...")
+    find_dependency(QOZ_StringZilla REQUIRED)
+    find_dependency(QOZ_mimalloc REQUIRED)
+    message(STATUS "QOZero (unbundled) found required dependencies.")
+endif()
+
+# --- Load Targets ---
+if(NOT TARGET QOZero::CoreStatic AND NOT TARGET QOZero::CoreShared)
+    include("${CMAKE_CURRENT_LIST_DIR}/QOZeroTargets.cmake")
+endif()
+
+message(STATUS "QOZero package loaded.")
+
+get_property(_is_imported TARGET QOZero::CoreStatic PROPERTY IMPORTED)
+if(_is_imported)
+  message(STATUS "  Provides target: QOZero::CoreStatic (links static dependencies if built/found)")
+endif()
+
+get_property(_is_imported TARGET QOZero::CoreShared PROPERTY IMPORTED)
+if(_is_imported)
+  message(STATUS "  Provides target: QOZero::CoreShared (links shared dependencies if built/found)")
+endif()

@@ -50,8 +50,16 @@ typedef QO_DivisionInt32 QO_Division;
 
 #define QO_SNULL(x,t) ((x) ? (x->t) : NULL)
 
+#if defined(__GNUC__)
+#define QO_DEC_DIGITS32(n) (1 + (31 - __builtin_clz(n)) / 3)
+#define QO_DEC_DIGITS64(n) (1 + (63 - __builtin_clzll(n)) / 3)
+#define QO_HEX_DIGITS32(n) (1 + (31 - __builtin_clz(n)) / 4)
+#define QO_HEX_DIGITS64(n) (1 + (63 - __builtin_clzll(n)) / 4)
+#elif defined(_MSC_VER)
 
+#else
 
+#endif
 
 // Thanks to sodiumcl10
 #define QO_FIND_ZEROS_INDEX64(x,n) 
