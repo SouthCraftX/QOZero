@@ -27,6 +27,7 @@ typedef     qo_int32_t          qo_ssize_t;
 typedef     qo_uint8_t  qo_byte_t;
 
 typedef     void*        qo_pointer_t;
+typedef     void const*  qo_cpointer_t;
 typedef     qo_int8_t   qo_bool_t;
 typedef     qo_uint32_t qo_ref_count_t;
 
@@ -50,6 +51,26 @@ typedef     char*               qo_cstring_t;
 typedef     char const  *       qo_ccstring_t;
 
 #define QO_INVALID_ADDRESS ((qo_pointer_t)(-1))
+
+qo_int32_t
+fp32cmp_with_epsilon(
+    qo_fp32_t x ,
+    qo_fp32_t y ,
+    qo_fp32_t epsilon
+) {
+    const qo_fp32_t diff = x - y;
+    return (diff > epsilon) - (diff < -epsilon);
+}
+
+qo_int32_t
+fp64cmp_with_epsilon(
+    qo_fp64_t x ,
+    qo_fp64_t y ,
+    qo_fp64_t epsilon
+) {
+    const qo_fp64_t diff = x - y;
+    return (diff > epsilon) - (diff < -epsilon);
+}
 
 #include "int128.h"
 
